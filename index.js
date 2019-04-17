@@ -46,16 +46,17 @@ for (let i = 0; i < 5; i++) {
     price: parseInt(data[4][2 * (i + 1)])
   }
 }
-console.log(lunch)
-console.log(rice)
+
 const fileName = dairyFileName(data[1][1])
+let csvString = ''
+
+for (let i = 0; i < 5; i++) {
+  csvString += `${i + 1},${lunch[i].title},${lunch[i].price},${rice[i].title},${
+    rice[i].price
+  }\n`
+}
 
 fs.writeFileSync(fileName, 'day,lunch,lunch_price,rice,rice_price\n')
-for (let i = 0; i < 5; i++) {
-  fs.appendFileSync(
-    fileName,
-    `${i + 1},${lunch[i].title},${lunch[i].price},${rice[i].title},${
-      rice[i].price
-    }\n`
-  )
-}
+
+fs.appendFileSync(fileName, csvString)
+fs.appendFileSync('log.txt', csvString)
